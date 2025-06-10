@@ -1,9 +1,43 @@
-import example.pepita
+import navesEspaciales.*
 
-describe "group of tests for pepita" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "tests de clase nave"{
+
+  test"acelerar limita la velocidad a 100000 y desacelerar a 0"{
+    naveBaliza.acelerar(99999999)
+    assert.equals(100000, naveBaliza.velocidad())
+    naveBaliza.desacelerar(50000)
+    assert.equals(50000, naveBaliza.velocidad())
+    naveBaliza.desacelerar(999999)
+    assert.equals(0, naveBaliza.velocidad())
+  }
+
+  test"ponerse paralelo, acercarse y alejarse al sol"{
+    naveBaliza.irHaciaElSol()
+    assert.equals(10, naveBaliza.direccionAlSol())
+    naveBaliza.escaparDelSol()
+    assert.equals(-10, naveBaliza.direccionAlSol())
+    naveBaliza.ponerseParaleloAlSol()
+    assert.equals(0, naveBaliza.direccionAlSol())
+  }
+
+  //testear acercarse un poco, alejarse un poco y los limites.
+}
+
+describe "tests de nave de combate" {
+
+  test "nave de combate manda 2 mensajes cortos, se respeta el orden y es escueta" {
+    naveDeCombate.emitirMensaje("alo")
+    naveDeCombate.emitirMensaje("como va")
+    naveDeCombate.emitirMensaje("chau")
+    assert.equals("alo", naveDeCombate.primerMensajeEmitido())    
+    assert.equals("chau", naveDeCombate.ultimoMensajeEmitido())
+    assert.that(naveDeCombate.esEscueta())
+  }
+
+  test "nave de combate no es escueta"{
+    naveDeCombate.emitirMensaje("yeah perdonen, kamehameha, despues del tema tetris viene el dragon ball rap, quien no haya seguido esta serie es xq no tiene infancia, big bang attack, atacan al planeta namek, vegeta son goku rivalidades saiyan, albergast pasto! porque en castellano ralla...")
+    assert.notThat(naveDeCombate.esEscueta())
   }
 
 }
